@@ -1,22 +1,22 @@
 {
-  "name": "markdown-it-samp",
-  "version": "0.0.4",
-  "description": "Samp html tags for markdown-it",
+  "name": "markdown-it-fb-figure",
+  "version": "0.0.1",
+  "description": "Facebook Instant Articles figure tag for markdown-it",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/felixsanz/markdown-it-samp.git"
+    "url": "git+https://github.com/onlinemad/markdown-it-fb-figure"
   },
   "keywords": [
     "markdown-it-plugin"
   ],
-  "author": "Felix Sanz",
+  "author": "Ian Wu <onlinemad@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/felixsanz/markdown-it-samp/issues"
+    "url": "https://github.com/onlinemad/markdown-it-fb-figure/issues"
   },
-  "homepage": "https://github.com/felixsanz/markdown-it-samp#readme"
+  "homepage": "https://github.com/onlinemad/markdown-it-fb-figure#readme"
 }

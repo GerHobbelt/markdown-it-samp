@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = function sample_plugin(md) {
-  function sample(state, startLine, endLine, silent) {
+module.exports = function figure_plugin(md) {
+  function figure(state, startLine, endLine, silent) {
     var marker, len, params, nextLine, mem, token, markup,
         haveEndMarker = false,
         pos = state.bMarks[startLine] + state.tShift[startLine],
@@ -11,7 +11,7 @@ module.exports = function sample_plugin(md) {
 
     marker = state.src.charCodeAt(pos);
 
-    if (marker !== 0xb4/* ´ */) {
+    if (marker !== 58/* : */) {
       return false;
     }
 
@@ -61,7 +61,7 @@ module.exports = function sample_plugin(md) {
 
       pos = state.skipChars(pos, marker);
 
-      // closing sample fence must be at least as long as the opening one
+      // closing figure fence must be at least as long as the opening one
       if (pos - mem < len) { continue; }
 
       // make sure tail has spaces only
@@ -79,7 +79,8 @@ module.exports = function sample_plugin(md) {
 
     state.line = nextLine + (haveEndMarker ? 1 : 0);
 
-    token         = state.push('sample', 'samp', 0);
+    token         = state.push('figure', 'figure', 0);
+    token.attrs   = [['class', params.split(' ')[2]]];
     token.info    = params;
     token.content = state.getLines(startLine + 1, nextLine, len, true);
     token.markup  = markup;
@@ -88,12 +89,14 @@ module.exports = function sample_plugin(md) {
     return true;
   };
 
-  md.block.ruler.before('fence', 'sample', sample, { alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]})
+  md.block.ruler.before('fence', 'figure', figure, { alt: [ 'paragraph', 'reference', 'blockquote', 'list' ]})
 
-  md.renderer.rules.sample = (tokens, idx, options, env, self) => {
-    var token = tokens[idx]
-
-    return '<pre><samp' + self.renderAttrs(token) + '>' + md.utils.escapeHtml(token.content) + '</samp></pre>\n'
+  md.renderer.rules.figure = (tokens, idx, options, env, self) => {
+    var token = tokens[idx];
+    if(options.fb_figure === true) {
+      return '<figure' + self.renderAttrs(token) + '>' + token.content + '</figure>'
+    } else {
+      return '';
+    }
   }
 }
-
